@@ -23403,6 +23403,8 @@ height=263
             <span class="n">delta_weights_h_o</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lr</span> <span class="o">*</span> <span class="n">output_error_term</span> <span class="o">*</span> <span class="n">hidden_outputs</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span>
 
         <span class="c1"># TODO: Update the weights</span>
+        <span class="c1"># 要清楚，这里实现其实是Mini Batch Gradient Descent</span>
+        <span class="c1"># 输入一个随机抽取的Batch，根据Batch中每个样本计算出梯度，最后更新的是梯度的平均值。</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">weights_hidden_to_output</span> <span class="o">+=</span> <span class="n">delta_weights_h_o</span> <span class="o">/</span> <span class="n">n_records</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">weights_input_to_hidden</span> <span class="o">+=</span> <span class="n">delta_weights_i_h</span> <span class="o">/</span> <span class="n">n_records</span>
  
@@ -23593,6 +23595,8 @@ OK
 <span class="n">losses</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;train&#39;</span><span class="p">:[],</span> <span class="s1">&#39;validation&#39;</span><span class="p">:[]}</span>
 <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iterations</span><span class="p">):</span>
     <span class="c1"># Go through a random batch of 128 records from the training data set</span>
+    <span class="c1"># Mini-Batch 方法</span>
+    <span class="c1"># 每次更新模型参数时用的是从训练集中随机抽取的子集，而不是全部训练集</span>
     <span class="n">batch</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">train_features</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
     <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">train_features</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">batch</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">train_targets</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">batch</span><span class="p">][</span><span class="s1">&#39;cnt&#39;</span><span class="p">]</span>
                              
@@ -27963,6 +27967,16 @@ height=266
 <li><p>从12月22日开始，到12月31日的这段时间内，出现了比较严重的过拟合现象，这主要是因为这段时间恰好是比较特殊的圣诞节元旦的节假日，用车数量显然会有减少，但模型仅仅有两年的数据，并不能有效的将圣诞节这个周期以年为单位的影响因素考虑到其中。如果有一百年的数据，这个趋势就比较容易学习了。</p>
 </li>
 </ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="&#24314;&#35758;">&#24314;&#35758;<a class="anchor-link" href="#&#24314;&#35758;">&#182;</a></h2><p>1.代码里面用的是Mini-Batch方法，但是课程和Notebook骨架中都是一笔带过，一开始看的时候有些莫名奇妙。建议简单点明一下BGD/SGD/Mini-Batch 这3种实现的区别。</p>
+<p>2.最好能够明确讲出来输出层激活函数的选择是由神经网络要处理的任务情况决定的，例如本项目的任务是回归的预测，因此输出应该是连续线性的，而对于比较常见的分类问题，则应该使用Sigmoid/Softmax之类的非线性激活函数。</p>
 
 </div>
 </div>
