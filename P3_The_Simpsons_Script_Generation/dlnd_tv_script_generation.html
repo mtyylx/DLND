@@ -12338,6 +12338,15 @@ Default GPU Device: /gpu:0
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="&#20851;&#20110;-Dropout">&#20851;&#20110; Dropout<a class="anchor-link" href="#&#20851;&#20110;-Dropout">&#182;</a></h3><p>值得注意的是，在RNN中使用Dropout的效果，不会像CNN里那么万能好用，而是要根据情况选用。这里我一上来就在每个Cell后都加了Dropout，但是结果是100代训练后Loss依然在1以上。说明模型还是欠拟合状态，为了进一步提高模型的收敛速度，这时候就应该取消Dropout，直接用最简单的单层LSTM网络进行训练，实验结果证明这样可以在100代内抵达0.09的很低Loss水平。</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[11]:</div>
